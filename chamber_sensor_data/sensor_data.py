@@ -1,14 +1,11 @@
-import csv
 import json, urllib.request
-import time
 import pandas as pd
-from pandas.io.json import json_normalize
 import streamlit as st
-from streamlit_option_menu import option_menu
-from chamber_page_1 import page_one
-from chamber_page_2 import page_two
-from chamber_page_3 import page_three
-from chamber_page_4 import page_four
+# import sys, os
+#
+# sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+import chamber_page_3, chamber_page_4, chamber_page_1, chamber_page_2
 from download import download_csv
 # ------------- api 데이터 받아와서 csv파일로 저장 -----------------
 
@@ -47,14 +44,12 @@ for i, url in enumerate(urls):
     output = json.loads(dataset)
     output = output['feeds']
     new_data_df = pd.DataFrame(output)
-    total_data = pd.read_csv(f'total_data_{i+1}.csv')
+
+    total_data = pd.read_csv(f'data/total_data_{i+1}.csv')
 
     df = pd.concat([total_data, new_data_df], ignore_index=False)
     df = df.drop_duplicates(subset='created_at', keep='last')
-    df.to_csv(f'total_data_{i+1}.csv', index=False, encoding='utf-8-sig')
-
-
-
+    df.to_csv(f'data/total_data_{i+1}.csv', index=False, encoding='utf-8-sig')
 
 
 
@@ -65,23 +60,23 @@ def main():
     options = ["Chamber 1", "Chamber 2", "Chamber 3", "Chamber 4"]
     choice = st.sidebar.selectbox("챔버 선택", options)
 
-    csv_file_path_1 = "./total_data_1.csv"
-    csv_file_path_2 = "./total_data_2.csv"
-    csv_file_path_3 = "./total_data_3.csv"
-    csv_file_path_4 = "./total_data_4.csv"
+    csv_file_path_1 = "data/total_data_1.csv"
+    csv_file_path_2 = "data/total_data_2.csv"
+    csv_file_path_3 = "data/total_data_3.csv"
+    csv_file_path_4 = "data/total_data_4.csv"
 
 
     if choice == "Chamber 1":
-        page_one()
+        chamber_page_1.page_one()
         download_csv(csv_file_path_1)
     elif choice == "Chamber 2":
-        page_two()
+        chamber_page_2.page_two()
         download_csv(csv_file_path_2)
     elif choice == "Chamber 3":
-        page_three()
+        chamber_page_3.page_three()
         download_csv(csv_file_path_3)
     elif choice == "Chamber 4":
-        page_four()
+        chamber_page_4.page_four()
         download_csv(csv_file_path_4)
 
 if __name__ == '__main__':
