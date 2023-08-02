@@ -7,6 +7,8 @@ import streamlit as st
 
 import chamber_page_3, chamber_page_4, chamber_page_1, chamber_page_2
 from download import download_csv
+
+
 # ------------- api 데이터 받아와서 csv파일로 저장 -----------------
 
 api_key_1 = "HN55139L0VGN5XNM"
@@ -50,7 +52,6 @@ for i, url in enumerate(urls):
     df = pd.concat([total_data, new_data_df], ignore_index=False)
     df = df.drop_duplicates(subset='created_at', keep='last')
     df.to_csv(f'data/total_data_{i+1}.csv', index=False, encoding='utf-8-sig')
-
 
 
 def main():
