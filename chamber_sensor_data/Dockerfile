@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 
 
 ## Copy all src files
-COPY .. /usr/src/app
+COPY ../.. /usr/src/app
 
 ## Install packages
 RUN pip install -r requirements.txt
