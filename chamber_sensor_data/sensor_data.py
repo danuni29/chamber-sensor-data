@@ -48,17 +48,17 @@ for i, url in enumerate(urls):
     new_data_df = pd.DataFrame(output)
 
     # total_data = pd.read_csv(f'../data/total_data_{i+1}.csv')
-    total_data = pd.read_csv(rf'C:\code\chamber_sensor_data\data\total_data_{i+1}.csv')
+    total_data = pd.read_csv(rf'data\total_data_{i+1}.csv')
 
 
     df = pd.concat([total_data, new_data_df], ignore_index=False)
     df = df.drop_duplicates(subset='created_at', keep='last')
     # df.to_csv(f'../data/total_data_{i+1}.csv', index=False, encoding='utf-8-sig')
-    df.to_csv(rf'C:\code\chamber_sensor_data\data\total_data_{i+1}.csv', index=False, encoding='utf-8-sig')
+    df.to_csv(rf'data\total_data_{i+1}.csv', index=False, encoding='utf-8-sig')
 
 
 def main():
-    data_dir = rf'C:\code\chamber_sensor_data\data'
+    data_dir = rf'data'
 
 
     st.sidebar.title("Chamber Data")
