@@ -7,3 +7,5 @@ services:
       - ./:/usr/src/app/
     ports:
       - 8801:8801
+    working_dir: /usr/src/app
+    command: streamlit run seonsor_data.py --server.port 8801

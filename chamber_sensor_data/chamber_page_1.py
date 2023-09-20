@@ -32,7 +32,7 @@ def page_one():
         st.subheader('raw data')
         st.write(data)
 
-    data_dir = rf'data'
+    data_dir = rf'C:\code\chamber_sensor_data\data'
     csv_file_path_1 = os.path.join(data_dir, "total_data_1.csv")
 
     download_selected_data_csv(data_2)
