@@ -1,9 +1,13 @@
+import os
+
 import pandas as pd
 import streamlit as st
 from download import download_selected_data_csv
-import datetime
+import requests
+from download import download_csv
+
 def page_one():
-    data_2 = pd.read_csv('data/total_data_1.csv')
+    data_2 = pd.read_csv(rf'C:\code\chamber_sensor_data\data\total_data_1.csv')
     data_2[['date', 'time']] = data_2['created_at'].str.split('T').to_list()
     data_2['time'] = data_2['time'].apply(lambda x: x[:5])
     data_2 = data_2.set_index(keys='time')
@@ -28,10 +32,22 @@ def page_one():
         st.subheader('raw data')
         st.write(data)
 
+    data_dir = rf'C:\code\chamber_sensor_data\data'
+    csv_file_path_1 = os.path.join(data_dir, "total_data_1.csv")
 
     download_selected_data_csv(data_2)
+    download_csv(csv_file_path_1)
+
+    st.subheader("센서 알림")
 
 
+    if st.button("온도 높음"):
+        requests.post("https://ntfy.sh/Chamber-Sensor", data="온도 높음 주의".encode(encoding='utf-8'))
 
+    if st.button("온도 낮음"):
+        requests.post("https://ntfy.sh/Chamber-Sensor", data="온도 낮음 주의".encode(encoding='utf-8'))
+
+    if st.button("습도 높음"):
+        requests.post("https://ntfy.sh/Chamber-Sensor", data="습도 높음 주의".encode(encoding='utf-8'))
 
 

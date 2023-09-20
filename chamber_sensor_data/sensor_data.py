@@ -1,7 +1,7 @@
 import json, urllib.request
 import pandas as pd
 import streamlit as st
-# import sys, os
+import sys, os
 #
 # sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
@@ -47,29 +47,37 @@ for i, url in enumerate(urls):
     output = output['feeds']
     new_data_df = pd.DataFrame(output)
 
-    total_data = pd.read_csv(f'data/total_data_{i+1}.csv')
+    # total_data = pd.read_csv(f'../data/total_data_{i+1}.csv')
+    total_data = pd.read_csv(rf'C:\code\chamber_sensor_data\data\total_data_{i+1}.csv')
+
 
     df = pd.concat([total_data, new_data_df], ignore_index=False)
     df = df.drop_duplicates(subset='created_at', keep='last')
-    df.to_csv(f'data/total_data_{i+1}.csv', index=False, encoding='utf-8-sig')
+    # df.to_csv(f'../data/total_data_{i+1}.csv', index=False, encoding='utf-8-sig')
+    df.to_csv(rf'C:\code\chamber_sensor_data\data\total_data_{i+1}.csv', index=False, encoding='utf-8-sig')
 
 
 def main():
+    data_dir = rf'C:\code\chamber_sensor_data\data'
 
 
     st.sidebar.title("Chamber Data")
     options = ["Chamber 1", "Chamber 2", "Chamber 3", "Chamber 4"]
     choice = st.sidebar.selectbox("챔버 선택", options)
 
-    csv_file_path_1 = "data/total_data_1.csv"
-    csv_file_path_2 = "data/total_data_2.csv"
-    csv_file_path_3 = "data/total_data_3.csv"
-    csv_file_path_4 = "data/total_data_4.csv"
+    csv_file_path_1 = os.path.join(data_dir, "total_data_1.csv")
+    csv_file_path_2 = os.path.join(data_dir, "total_data_2.csv")
+    csv_file_path_3 = os.path.join(data_dir, "total_data_3.csv")
+    csv_file_path_4 = os.path.join(data_dir, "total_data_4.csv")
+
+    # csv_file_path_1 = "../data/total_data_1.csv"
+    # csv_file_path_2 = "../data/total_data_2.csv"
+    # csv_file_path_3 = "../data/total_data_3.csv"
+    # csv_file_path_4 = "../data/total_data_4.csv"
 
 
     if choice == "Chamber 1":
         chamber_page_1.page_one()
-        download_csv(csv_file_path_1)
     elif choice == "Chamber 2":
         chamber_page_2.page_two()
         download_csv(csv_file_path_2)
