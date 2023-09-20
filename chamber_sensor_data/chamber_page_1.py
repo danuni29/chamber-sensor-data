@@ -7,7 +7,7 @@ import requests
 from download import download_csv
 
 def page_one():
-    data_2 = pd.read_csv(rf'C:\code\chamber_sensor_data\data\total_data_1.csv')
+    data_2 = pd.read_csv(rf'data\total_data_1.csv')
     data_2[['date', 'time']] = data_2['created_at'].str.split('T').to_list()
     data_2['time'] = data_2['time'].apply(lambda x: x[:5])
     data_2 = data_2.set_index(keys='time')
@@ -32,7 +32,7 @@ def page_one():
         st.subheader('raw data')
         st.write(data)
 
-    data_dir = rf'C:\code\chamber_sensor_data\data'
+    data_dir = rf'data'
     csv_file_path_1 = os.path.join(data_dir, "total_data_1.csv")
 
     download_selected_data_csv(data_2)

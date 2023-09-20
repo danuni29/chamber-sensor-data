@@ -8,4 +8,4 @@ services:
     ports:
       - 8801:8801
     working_dir: /usr/src/app
-    command: streamlit run seonsor_data.py --server.port 8801
+    command: streamlit run chamber_sensor_data/sensor_data.py --server.port 8801
